@@ -4,17 +4,45 @@ import ch.lambdaj.function.convert.Converter;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
-import static ch.lambdaj.Lambda.*;
 import static ch.lambdaj.Lambda.convert;
-import static ch.lambdaj.Lambda.join;
-import static ch.lambdaj.Lambda.sum;
-import static org.hamcrest.Matchers.*;
 
 @Component("calculatorDemo")
 public class Calculator {
+    public static int add(String text){
+        List<Integer> numbers=parseNumbers(text);
+        return numbers.stream().mapToInt(i -> i).sum();
+    }
 
+    private static List<Integer> parseNumbers(String text) {
+        String[] tokens=tokenize(text);
+        List<Integer> numbers = convert(tokens, toInt());
+        return numbers;
+    }
+
+    private static String[] tokenize(String text) {
+        if(text.isEmpty()){
+            return new String[0];
+        }else {
+            return splitUsingCommas(text);
+        }
+    }
+
+
+    private static String[] splitUsingCommas(String text) {
+        String tokens[]=text.split(",");
+        return tokens;
+    }
+
+    private static Converter<String, Integer> toInt(){
+        return new Converter<String,Integer>() {
+            public Integer convert(String s) {
+                return toInt(s);
+            }
+        };
+    }
+
+    private static int toInt(String text) {
+        return Integer.parseInt(text);
+    }
 }
