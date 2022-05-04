@@ -26,8 +26,11 @@ public class Calculator {
         if(text.isEmpty()){
             return new String[0];
         }else if(usesCustomDelimiterSyntax(text)){
-            return splitUsingCustomDelimiterSyntax(text);
-        }else {
+            return splitUsingCustomDelimiterSyntax(text,true );
+        }else if(48 > text.charAt(0) || text.charAt(0) > 57){
+            return splitUsingCustomDelimiterSyntax(text,false );
+        }
+        else {
             return splitUsingNewLinesAndCommas(text);
         }
     }
@@ -36,8 +39,15 @@ public class Calculator {
         return text.startsWith("//");
     }
 
-    private static String[] splitUsingCustomDelimiterSyntax(String text) {
-        Matcher matcher = Pattern.compile("//(.)\n(.*)").matcher(text);
+    private static String[] splitUsingCustomDelimiterSyntax(String text, boolean providedCustomDelimeter) {
+        if(providedCustomDelimeter) {
+            Matcher matcher = Pattern.compile("//(.)\n(.*)").matcher(text);
+            matcher.matches();
+            String customDelimiter = matcher.group(1);
+            String numbers = matcher.group(2);
+            return numbers.split(Pattern.quote(customDelimiter));
+        }
+        Matcher matcher = Pattern.compile("(.)\n(.*)").matcher(text);
         matcher.matches();
         String customDelimiter = matcher.group(1);
         String numbers = matcher.group(2);
