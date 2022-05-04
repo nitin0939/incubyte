@@ -20,9 +20,9 @@ public class Calculator {
     }
 
     private static void ensureAllNonNegatives(List<Integer> numbers) {
-        for(int number:numbers){
-            if(number < 0)
-                throw  new RuntimeException("Negatives not allowed: "+number);
+        List<Integer> negatives = numbers.stream().filter(number -> number <0).collect(Collectors.toList());
+        if(negatives.size() > 0){
+            throw  new RuntimeException("Negatives not allowed: "+negatives.toString().replace("[", "").replace("]",""));
         }
     }
 
