@@ -24,13 +24,13 @@ public class Calculator {
         if(text.isEmpty()){
             return new String[0];
         }else {
-            return splitUsingCommas(text);
+            return splitUsingNewLinesAndCommas(text);
         }
     }
 
 
-    private static String[] splitUsingCommas(String text) {
-        String tokens[]=text.split(",");
+    private static String[] splitUsingNewLinesAndCommas(String text) {
+        String tokens[]=text.split(",|\n");
         return tokens;
     }
 
