@@ -9,7 +9,7 @@ public class CalculatorApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CalculatorApplication.class, args);
-		String input="1,\n";
+		String input="//.\n1.2";
 		System.out.println(Calculator.add(input));
 	}
 
