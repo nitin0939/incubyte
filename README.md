@@ -3,7 +3,7 @@ it is a calculator standalone application where we can provide inputs to get sum
 
 # Technology Used
 Language: java 17  
-Framework: springBoot 
+Framework: springBoot   
 Build Tool: Maven
 
 ## Running Application
