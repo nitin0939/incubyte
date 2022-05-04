@@ -6,14 +6,24 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static ch.lambdaj.Lambda.convert;
+import static ch.lambdaj.Lambda.join;
 
 @Component("calculatorDemo")
 public class Calculator {
     public static int add(String text){
         List<Integer> numbers=parseNumbers(text);
+        ensureAllNonNegatives(numbers);
         return numbers.stream().mapToInt(i -> i).sum();
+    }
+
+    private static void ensureAllNonNegatives(List<Integer> numbers) {
+        for(int number:numbers){
+            if(number < 0)
+                throw  new RuntimeException("Negatives not allowed: "+number);
+        }
     }
 
     private static List<Integer> parseNumbers(String text) {
